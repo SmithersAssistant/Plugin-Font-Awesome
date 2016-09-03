@@ -6,13 +6,7 @@ Object.defineProperty(exports, "__esModule", {
 
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
-var _react = require('react');
-
-var _react2 = _interopRequireDefault(_react);
-
 var _electron = require('electron');
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _objectWithoutProperties(obj, keys) { var target = {}; for (var i in obj) { if (keys.indexOf(i) >= 0) continue; if (!Object.prototype.hasOwnProperty.call(obj, i)) continue; target[i] = obj[i]; } return target; }
 
@@ -21,6 +15,7 @@ var FONT_AWESOME_COMPONENT = 'com.robinmalfait.font-awesome';
 var BASE = "https://rbn.nu/fa/list";
 
 exports.default = function (robot) {
+  var React = robot.dependencies.React;
   var Blank = robot.cards.Blank;
   var _robot$UI = robot.UI;
   var A = _robot$UI.A;
@@ -30,7 +25,7 @@ exports.default = function (robot) {
   var CollectionItem = _robot$UI.CollectionItem;
 
 
-  var FA = _react2.default.createClass({
+  var FA = React.createClass({
     displayName: 'FA',
     getInitialState: function getInitialState() {
       return {
@@ -77,24 +72,24 @@ exports.default = function (robot) {
       var icons = this.state.icons;
 
 
-      return _react2.default.createElement(
+      return React.createElement(
         Collection,
         { style: { maxHeight: 450 } },
         icons.map(function (icon) {
-          return _react2.default.createElement(
+          return React.createElement(
             CollectionItem,
             { key: icon.class },
-            _react2.default.createElement(Icon, { icon: icon.class.replace('fa fa-', '') }),
+            React.createElement(Icon, { icon: icon.class.replace('fa fa-', '') }),
             ' ',
             icon.name,
-            _react2.default.createElement(
+            React.createElement(
               Button,
               { className: 'right', onClick: function onClick() {
                   return _this3.handleCopy(icon);
                 } },
-              _react2.default.createElement(Icon, { icon: 'copy' })
+              React.createElement(Icon, { icon: 'copy' })
             ),
-            _react2.default.createElement(
+            React.createElement(
               'small',
               { className: 'right muted', style: { marginRight: 15 } },
               icon.aliases.join(', ')
@@ -106,14 +101,14 @@ exports.default = function (robot) {
     renderVersions: function renderVersions(list) {
       var _this4 = this;
 
-      return _react2.default.createElement(
+      return React.createElement(
         Collection,
         { style: { maxHeight: 450 } },
         list.map(function (version) {
-          return _react2.default.createElement(
+          return React.createElement(
             CollectionItem,
             { key: version.tag },
-            _react2.default.createElement(
+            React.createElement(
               A,
               { href: '#', onClick: function onClick(e) {
                   return _this4.setSelectedVersion(e, version);
@@ -136,17 +131,17 @@ exports.default = function (robot) {
       var selected_version = _state.selected_version;
 
 
-      return _react2.default.createElement(
+      return React.createElement(
         Blank,
         _extends({ title: 'Font-Awesome' }, other),
-        _react2.default.createElement(
+        React.createElement(
           'h4',
           null,
-          selected_version == null ? _react2.default.createElement(
+          selected_version == null ? React.createElement(
             'span',
             null,
             'Choose a version:'
-          ) : _react2.default.createElement(
+          ) : React.createElement(
             'span',
             null,
             'List of icons (',
@@ -155,12 +150,12 @@ exports.default = function (robot) {
           )
         ),
         selected_version == null ? this.renderVersions(list) : this.renderIcons(),
-        _react2.default.createElement(
+        React.createElement(
           'small',
           { className: 'left' },
           list.length,
           ' versions - (latest version: ',
-          _react2.default.createElement(
+          React.createElement(
             A,
             { href: '#', onClick: function onClick(e) {
                 return _this5.setSelectedVersion(e, latest_version);
@@ -169,10 +164,10 @@ exports.default = function (robot) {
           ),
           ')'
         ),
-        _react2.default.createElement(
+        React.createElement(
           'small',
           { className: 'right' },
-          _react2.default.createElement(
+          React.createElement(
             A,
             { href: '#', onClick: function onClick(e) {
                 return _this5.setSelectedVersion(e, null);

@@ -1,4 +1,3 @@
-import React from 'react'
 import { clipboard } from 'electron'
 
 const FONT_AWESOME_COMPONENT = 'com.robinmalfait.font-awesome'
@@ -6,7 +5,7 @@ const FONT_AWESOME_COMPONENT = 'com.robinmalfait.font-awesome'
 const BASE = "https://rbn.nu/fa/list"
 
 export default robot => {
-
+  const {React} = robot.dependencies
   const { Blank } = robot.cards
   const { A, Button, Icon, Collection, CollectionItem } = robot.UI
 
