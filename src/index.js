@@ -5,9 +5,10 @@ const FONT_AWESOME_COMPONENT = 'com.robinmalfait.font-awesome'
 const BASE = "https://rbn.nu/fa/list"
 
 export default robot => {
-  const {React} = robot.dependencies
+  const { React } = robot.dependencies
   const { Blank } = robot.cards
   const { A, Button, Icon, Collection, CollectionItem } = robot.UI
+  const { restorableComponent, enhance } = robot
 
   const FA = React.createClass({
     getInitialState() {
@@ -26,7 +27,7 @@ export default robot => {
         .then(data => {
           this.setState({
             list: data,
-            latest_version: data[0]
+            latest_version: data[ 0 ]
           })
         });
     },
@@ -49,49 +50,53 @@ export default robot => {
       const { icons } = this.state
 
       return (
-      <Collection style={{ maxHeight: 450 }}>
-        {icons.map(icon => (
-        <CollectionItem key={icon.class}>
-          <Icon icon={icon.class.replace('fa fa-', '')}/> {icon.name}
-          <Button className="right" onClick={() => this.handleCopy(icon)}><Icon icon="copy"/></Button>
-          <small className="right muted" style={{ marginRight: 15 }}>{icon.aliases.join(', ')}</small>
-        </CollectionItem>
-        ))}
-      </Collection>
+        <Collection style={{ maxHeight: 450 }}>
+          {icons.map(icon => (
+            <CollectionItem key={icon.class}>
+              <Icon icon={icon.class.replace('fa fa-', '')}/> {icon.name}
+              <Button className="right" onClick={() => this.handleCopy(icon)}><Icon icon="copy"/></Button>
+              <small className="right muted" style={{ marginRight: 15 }}>{icon.aliases.join(', ')}</small>
+            </CollectionItem>
+          ))}
+        </Collection>
       )
     },
     renderVersions(list) {
       return (
-      <Collection style={{ maxHeight: 450 }}>
-        {list.map(version => (
-        <CollectionItem key={version.tag}>
-          <A href="#" onClick={(e) => this.setSelectedVersion(e, version)}>{version.tag}</A>
-        </CollectionItem>
-        ))}
-      </Collection>
+        <Collection style={{ maxHeight: 450 }}>
+          {list.map(version => (
+            <CollectionItem key={version.tag}>
+              <A href="#" onClick={(e) => this.setSelectedVersion(e, version)}>{version.tag}</A>
+            </CollectionItem>
+          ))}
+        </Collection>
       )
     },
     render() {
       const { ...other } = this.props
-      const { list, icons,latest_version, selected_version } = this.state
+      const { list, icons, latest_version, selected_version } = this.state
 
       return (
-      <Blank title="Font-Awesome" {...other}>
-        <h4>{selected_version == null ? (
-          <span>Choose a version:</span>
-        ) : (
-          <span>List of icons ({icons.length})</span>
-        )}</h4>
+        <Blank title="Font-Awesome" {...other}>
+          <h4>{selected_version == null ? (
+            <span>Choose a version:</span>
+          ) : (
+            <span>List of icons ({icons.length})</span>
+          )}</h4>
 
-        {selected_version == null ? this.renderVersions(list) : this.renderIcons()}
-        <small className="left">{list.length} versions - (latest version: <A href="#" onClick={(e) => this.setSelectedVersion(e, latest_version)}>{latest_version.tag}</A>)</small>
-        <small className="right"><A href="#" onClick={(e) => this.setSelectedVersion(e, null)}>reset</A></small>
-      </Blank>
+          {selected_version == null ? this.renderVersions(list) : this.renderIcons()}
+          <small className="left">{list.length} versions - (latest version: <A href="#"
+                                                                               onClick={(e) => this.setSelectedVersion(e, latest_version)}>{latest_version.tag}</A>)
+          </small>
+          <small className="right"><A href="#" onClick={(e) => this.setSelectedVersion(e, null)}>reset</A></small>
+        </Blank>
       )
     }
   })
 
-  robot.registerComponent(FA, FONT_AWESOME_COMPONENT);
+  robot.registerComponent(enhance(FA, [
+    restorableComponent
+  ]), FONT_AWESOME_COMPONENT);
 
   robot.listen(/^fa$/, {
     description: "font awesome",

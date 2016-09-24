@@ -23,6 +23,8 @@ exports.default = function (robot) {
   var Icon = _robot$UI.Icon;
   var Collection = _robot$UI.Collection;
   var CollectionItem = _robot$UI.CollectionItem;
+  var restorableComponent = robot.restorableComponent;
+  var enhance = robot.enhance;
 
 
   var FA = React.createClass({
@@ -157,7 +159,8 @@ exports.default = function (robot) {
           ' versions - (latest version: ',
           React.createElement(
             A,
-            { href: '#', onClick: function onClick(e) {
+            { href: '#',
+              onClick: function onClick(e) {
                 return _this5.setSelectedVersion(e, latest_version);
               } },
             latest_version.tag
@@ -179,7 +182,7 @@ exports.default = function (robot) {
     }
   });
 
-  robot.registerComponent(FA, FONT_AWESOME_COMPONENT);
+  robot.registerComponent(enhance(FA, [restorableComponent]), FONT_AWESOME_COMPONENT);
 
   robot.listen(/^fa$/, {
     description: "font awesome",
